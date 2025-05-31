@@ -1,14 +1,17 @@
 import re
 
 # Raw sequence from the file (as a string)
-raw_seq = open('proinsulin/preproinsulin-seq.txt', 'r')
+with open('proinsulin/proinsulin-seq.txt', 'r') as f:
+    raw_seq = f.read()
 
 # Remove unwanted parts: ORIGIN, numbers, slashes, spaces, newlines
 clean_seq = re.sub(r'ORIGIN|//|\d+|\s+', '', raw_seq).lower()
 
+comma_seq = raw_seq.replace(' ', ',')
+
 # Save the full clean sequence
 with open('proinsulin/preproinsulin-seq-clean.txt', 'w') as f:
-    f.write(clean_seq)
+    f.write(comma_seq)
 
 # Save lsinsulin (1-24)
 with open('proinsulin/lsinsulin-seq-clean.txt', 'w') as f:
