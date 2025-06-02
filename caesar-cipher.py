@@ -20,7 +20,7 @@ def encryptMessage(message, cipherkey, alphabet):
     uppercaseMessage = message.upper()
     for currentCharacter in uppercaseMessage:
         position = alphabet.find(currentCharacter)
-        newPosition = position + int(cipherKey)
+        newPosition = position + int(cipherkey)
         if currentCharacter in alphabet:
             encryptedMessage = encryptedMessage + alphabet[newPosition]
         else:
