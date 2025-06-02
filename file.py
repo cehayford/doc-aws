@@ -6,9 +6,11 @@ def solving_for_prime_num(init, final):
                 if num % i == 0:
                     break
             else:
-                # print(f"{num} is a prime number")
                 prime.append(num)
-    print("Prime numbers list:", prime)
+    # Write the results to results.txt
+    with open("results.txt", "w") as f:
+        f.write("Prime numbers list: " + str(prime) + "\n")
+    print("Prime numbers list written to results.txt.")
 
 
 solving_for_prime_num(1, 250)
