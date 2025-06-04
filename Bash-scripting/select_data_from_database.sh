@@ -14,6 +14,7 @@ mysql_secure_installation
 
 # login with password
 mysql -u root --password='re:St@rt!9'
+mysql -u root --password='<your_password_here>'
 
 # display the various databases
 SHOW DATABASES;
@@ -22,3 +23,12 @@ DROP DATABASE IF EXISTS world;
 CREATE DATABASE world;
 USE world;
 SOURCE /home/ec2-user/world.sql;
+
+
+SHOW DATABASES;
+#define the database if not exists
+DROP DATABASE IF EXISTS studentsEntry;
+CREATE DATABASE studentsEntry;
+USE studentsEntry;
+SOURCE /home/ec2-user/studentsEntry.sql;
+
