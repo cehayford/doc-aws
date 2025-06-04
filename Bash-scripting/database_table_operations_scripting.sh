@@ -21,3 +21,5 @@ mysql -u root #--password='re:St@rt!9'
 # or with password
 # Uncomment the line below to use a password
 mysql -u root --password='re:St@rt!9'
+
+
