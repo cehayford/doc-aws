@@ -8,5 +8,3 @@ cd /var/www/html
 
 # creating html file with vi
 sudo vi projects.html
-
-
