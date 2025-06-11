@@ -12,3 +12,4 @@
 }
 
 
+   sudo dnf install mysql-community-server -y
