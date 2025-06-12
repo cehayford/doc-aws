@@ -145,21 +145,14 @@ aws rds describe-db-instances \
 #     ]
 # ]
 
-
+# create a database replica(dump) in the RDS instance
 mysqldump --user=root --password='Re:Start!9' \
 --databases cafe_db \
 --add-drop-database > cafedb-backup.sql
 
-mysqldump --user=root --password='Re:Start!9' \
-  --host='cafedbinstance.c0aqnonbhq7h.us-west-2.rds.amazonaws.com' \
-  --databases cafe_db \
-  --add-drop-database > cafedb-backup.sql
-
+# connect to the RDS instance
 mysql --user=root --password='Re:Start!9' \
 --host='cafedbinstance.c0aqnonbhq7h.us-west-2.rds.amazonaws.com' \
 cafe_db
 
-mysql --u root --password='Re:Start!9' \
---host='cafedbinstance.c0aqnonbhq7h.us-west-2.rds.amazonaws.com' \
-cafe_db
 
