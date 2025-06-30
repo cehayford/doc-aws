@@ -1,5 +1,7 @@
 # AWS Scripts and Python Utilities
 
+![AWS Logo](https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png)
+
 This repository contains a collection of scripts and utilities for working with Amazon Web Services (AWS) and Python. The workspace is organized into several directories, each focusing on different AWS services or Python programming tasks.
 
 ## Directory Structure
