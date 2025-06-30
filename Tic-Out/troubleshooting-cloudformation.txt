@@ -1,0 +1,166 @@
+aws cloudformation create-stack \
+--stack-name myStack \
+--template-body file://template1.yaml \
+--capabilities CAPABILITY_NAMED_IAM \
+--parameters ParameterKey=KeyName,ParameterValue=vockey
+{
+    "StackId": "arn:aws:cloudformation:us-west-2:005972972559:stack/myStack/b59064c0-5020-11f0-9b19-0a3cb62971df"
+}
+
+
+watch -n 5 -d \
+aws cloudformation describe-stack-resources \
+--stack-name myStack \
+--query 'StackResources[*].[ResourceType,ResourceStatus]' \
+--output table
+-----------------------------------------------------------------
+|                    DescribeStackResources                     |
++-------------------------------------------+-------------------+
+|  AWS::EC2::InternetGateway                |  DELETE_COMPLETE  |
+|  AWS::EC2::VPC                            |  DELETE_COMPLETE  |
+|  AWS::S3::Bucket                          |  DELETE_COMPLETE  |
+|  AWS::EC2::Route                          |  DELETE_COMPLETE  |
+|  AWS::EC2::RouteTable                     |  DELETE_COMPLETE  |
+|  AWS::EC2::SubnetRouteTableAssociation    |  DELETE_COMPLETE  |
+|  AWS::EC2::Subnet                         |  DELETE_COMPLETE  |
+|  AWS::EC2::VPCGatewayAttachment           |  DELETE_COMPLETE  |
+|  AWS::CloudFormation::WaitCondition       |  DELETE_COMPLETE  |
+|  AWS::CloudFormation::WaitConditionHandle |  DELETE_COMPLETE  |
+|  AWS::EC2::SecurityGroup                  |  DELETE_COMPLETE  |
+|  AWS::EC2::Instance                       |  DELETE_COMPLETE  |
++-------------------------------------------+-------------------+
+
+
+watch -n 5 -d \
+aws cloudformation describe-stacks \
+--stack-name myStack \
+--output table
+---------------------------------------------------------------------------------------------------------------------------------------
+|                                                           DescribeStacks                                                            |
++-------------------------------------------------------------------------------------------------------------------------------------+
+||                                                              Stacks                                                               ||
+|+-----------------------------+-----------------------------------------------------------------------------------------------------+|
+||  CreationTime               |  2025-06-23T10:56:26.464Z                                                                           ||
+||  DeletionTime               |  2025-06-23T10:59:22.022Z                                                                           ||
+||  Description                |  Lab template                                                                                       ||
+||  DisableRollback            |  False                                                                                              ||
+||  EnableTerminationProtection|  False                                                                                              ||
+||  StackId                    |  arn:aws:cloudformation:us-west-2:005972972559:stack/myStack/b59064c0-5020-11f0-9b19-0a3cb62971df   ||
+||  StackName                  |  myStack                                                                                            ||
+||  StackStatus                |  ROLLBACK_COMPLETE                                                                                  ||
+|+-----------------------------+-----------------------------------------------------------------------------------------------------+|
+|||                                                          Capabilities                                                           |||
+||+---------------------------------------------------------------------------------------------------------------------------------+||
+|||  CAPABILITY_NAMED_IAM                                                                                                           |||
+||+---------------------------------------------------------------------------------------------------------------------------------+||
+|||                                                        DriftInformation                                                         |||
+||+-------------------------------------------------------------------------+-------------------------------------------------------+||
+|||  StackDriftStatus                                                       |  NOT_CHECKED                                          |||
+||+-------------------------------------------------------------------------+-------------------------------------------------------+||
+|||                                                           Parameters                                                            |||
+||+----------------------+----------------------------------------------------------------------------+-----------------------------+||
+|||     ParameterKey     |                              ParameterValue                                |        ResolvedValue        |||
+||+----------------------+----------------------------------------------------------------------------+-----------------------------+||
+|||  KeyName             |  vockey                                                                    |                             |||
+|||  LabVpcCidr          |  10.0.0.0/20                                                               |                             |||
+|||  PublicSubnetCidr    |  10.0.0.0/24                                                               |                             |||
+|||  AmazonLinuxAMIID    |  /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2             |  ami-011e15a70256b7f26      |||
+||+----------------------+----------------------------------------------------------------------------+-----------------------------+||
+
+
+
+
+aws cloudformation describe-stack-events \
+--stack-name myStack \
+--query "StackEvents[?ResourceStatus == 'CREATE_FAILED']"
+[
+    {
+        "StackId": "arn:aws:cloudformation:us-west-2:005972972559:stack/myStack/b59064c0-5020-11f0-9b19-0a3cb62971df", 
+        "EventId": "WaitCondition-CREATE_FAILED-2025-06-23T10:59:21.718Z", 
+        "ResourceStatus": "CREATE_FAILED", 
+        "ResourceType": "AWS::CloudFormation::WaitCondition", 
+        "Timestamp": "2025-06-23T10:59:21.718Z", 
+        "ResourceStatusReason": "WaitCondition timed out. Received 0 conditions when expecting 1", 
+        "StackName": "myStack", 
+        "ResourceProperties": "{\"Timeout\":\"60\",\"Handle\":\"https://cloudformation-waitcondition-us-west-2.s3-us-west-2.amazonaws.com/arn%3Aaws%3Acloudformation%3Aus-west-2%3A005972972559%3Astack/myStack/b59064c0-5020-11f0-9b19-0a3cb62971df/b5926090-5020-11f0-9b19-0a3cb62971df/WaitHandle?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250623T105629Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86399&X-Amz-Credential=AKIAJBJSWSW6NLR67N6A%2F20250623%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Signature=6e1cf201971ad0e091ad88054f57d9ec16df71fe1db227f1e1bcb24c430a39a1\"}", 
+        "PhysicalResourceId": "arn:aws:cloudformation:us-west-2:005972972559:stack/myStack/b59064c0-5020-11f0-9b19-0a3cb62971df/b5926090-5020-11f0-9b19-0a3cb62971df/WaitHandle", 
+        "LogicalResourceId": "WaitCondition"
+    }
+]
+
+
+
+aws cloudformation describe-stacks \
+> --stack-name myStack \
+> --output table
+---------------------------------------------------------------------------------------------------------------------------------------
+|                                                           DescribeStacks                                                            |
++-------------------------------------------------------------------------------------------------------------------------------------+
+||                                                              Stacks                                                               ||
+|+-----------------------------+-----------------------------------------------------------------------------------------------------+|
+||  CreationTime               |  2025-06-23T10:56:26.464Z                                                                           ||
+||  DeletionTime               |  2025-06-23T10:59:22.022Z                                                                           ||
+||  Description                |  Lab template                                                                                       ||
+||  DisableRollback            |  False                                                                                              ||
+||  EnableTerminationProtection|  False                                                                                              ||
+||  StackId                    |  arn:aws:cloudformation:us-west-2:005972972559:stack/myStack/b59064c0-5020-11f0-9b19-0a3cb62971df   ||
+||  StackName                  |  myStack                                                                                            ||
+||  StackStatus                |  ROLLBACK_COMPLETE                                                                                  ||
+|+-----------------------------+-----------------------------------------------------------------------------------------------------+|
+|||                                                          Capabilities                                                           |||
+||+---------------------------------------------------------------------------------------------------------------------------------+||
+|||  CAPABILITY_NAMED_IAM                                                                                                           |||
+||+---------------------------------------------------------------------------------------------------------------------------------+||
+|||                                                        DriftInformation                                                         |||
+||+-------------------------------------------------------------------------+-------------------------------------------------------+||
+|||  StackDriftStatus                                                       |  NOT_CHECKED                                          |||
+||+-------------------------------------------------------------------------+-------------------------------------------------------+||
+|||                                                           Parameters                                                            |||
+||+----------------------+----------------------------------------------------------------------------+-----------------------------+||
+|||     ParameterKey     |                              ParameterValue                                |        ResolvedValue        |||
+||+----------------------+----------------------------------------------------------------------------+-----------------------------+||
+|||  KeyName             |  vockey                                                                    |                             |||
+|||  LabVpcCidr          |  10.0.0.0/20                                                               |                             |||
+|||  PublicSubnetCidr    |  10.0.0.0/24                                                               |                             |||
+|||  AmazonLinuxAMIID    |  /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2             |  ami-011e15a70256b7f26      |||
+||+----------------------+----------------------------------------------------------------------------+-----------------------------+||
+
+
+# delete the stack with the status ROLLBACK_COMPLETE
+aws cloudformation delete-stack --stack-name myStack
+
+
+# creating a new stack again
+aws cloudformation create-stack \
+--stack-name myStack \
+--template-body file://template1.yaml \
+--capabilities CAPABILITY_NAMED_IAM \
+--on-failure DO_NOTHING \
+--parameters ParameterKey=KeyName,ParameterValue=vockey
+{
+    "StackId": "arn:aws:cloudformation:us-west-2:005972972559:stack/myStack/30f5add0-5023-11f0-a702-0a99dbb82fd3"
+}
+
+
+
+aws cloudformation describe-stack-events \
+> --stack-name myStack \
+> --query "StackEvents[?ResourceStatus == 'CREATE_FAILED']"
+[]
+[
+    [
+        "terminated", 
+        null
+    ], 
+    [
+        "running", 
+        "52.27.162.199"
+    ]
+]
+
+
+
+
+Reference:
+----- https://www.youtube.com/@CloudGenius-w6t
+----

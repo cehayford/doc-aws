@@ -1,0 +1,10 @@
+# creating Route 53
+# also create a failover for the route 53
+
+
+CafeInstance1IPAddress	52.35.140.223
+PrimaryWebSiteURL	52.35.140.223/cafe
+SecondaryWebsiteURL	100.21.61.221/cafe
+CafeInstance2IPAddress	100.21.61.221
+
+# also know all the various routing policies
