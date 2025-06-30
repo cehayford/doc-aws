@@ -157,3 +157,10 @@ aws cloudformation describe-stack-events \
         "52.27.162.199"
     ]
 ]
+
+
+
+
+Reference:
+----- https://www.youtube.com/@CloudGenius-w6t
+----
